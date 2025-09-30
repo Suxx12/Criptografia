@@ -1,0 +1,20 @@
+{
+  "Python (requests)": {
+    "time": 1.28,
+    "requests": 625,
+    "req_per_sec": 486.75,
+    "success": 2
+  },
+  "Hydra": {
+    "time": 33.34,
+    "requests": 625,
+    "req_per_sec": 18.75,
+    "success": 2
+  },
+  "cURL/Bash": {
+    "time": 5.07,
+    "requests": 625,
+    "req_per_sec": 123.22,
+    "success": 2
+  }
+}
