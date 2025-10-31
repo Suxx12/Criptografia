@@ -1,0 +1,3 @@
+Username,Password,Status_Code,Response_Length,Detection_Method
+admin,password,200,4413,SUCCESS_MESSAGE
+user,admin,200,4387,SUCCESS_MESSAGE
