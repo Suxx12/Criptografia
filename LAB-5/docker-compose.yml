@@ -1,0 +1,43 @@
+services:
+  c1:
+    build:
+      context: .
+      dockerfile: Dockerfile.C1
+    container_name: lab5-c1
+    networks:
+      - lab5-network
+    command: tail -f /dev/null
+
+  c2:
+    build:
+      context: .
+      dockerfile: Dockerfile.C2
+    container_name: lab5-c2
+    networks:
+      - lab5-network
+    command: tail -f /dev/null
+
+  c3:
+    build:
+      context: .
+      dockerfile: Dockerfile.C3
+    container_name: lab5-c3
+    networks:
+      - lab5-network
+    command: tail -f /dev/null
+
+  s1:
+    build:
+      context: .
+      dockerfile: Dockerfile.C4-S1
+    container_name: lab5-s1
+    networks:
+      - lab5-network
+    ports:
+      - "2222:22"
+    hostname: s1
+
+networks:
+  lab5-network:
+    driver: bridge
+

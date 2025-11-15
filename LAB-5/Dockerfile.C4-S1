@@ -1,0 +1,37 @@
+# Dockerfile para C4/S1 - Ubuntu 22.10 (Cliente y Servidor)
+FROM ubuntu:22.10
+
+# Configurar repositorios antiguos (Ubuntu 22.10 ya no está en repositorios activos)
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu|http://old-releases.ubuntu.com/ubuntu|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.ubuntu.com/ubuntu|http://old-releases.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+
+# Actualizar e instalar OpenSSH cliente y servidor, tcpdump
+RUN apt-get update && \
+    apt-get install -y openssh-client openssh-server tcpdump && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configurar SSH server
+RUN mkdir -p /var/run/sshd && \
+    mkdir -p /root/.ssh
+
+# Crear usuario "prueba" con contraseña "prueba"
+RUN useradd -m -s /bin/bash prueba && \
+    echo "prueba:prueba" | chpasswd
+
+# Configurar SSH para permitir conexiones
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+# Exponer puerto SSH
+EXPOSE 22
+
+# Script de inicio para el servidor SSH
+COPY start-ssh.sh /start-ssh.sh
+RUN chmod +x /start-ssh.sh
+
+WORKDIR /root
+
+CMD ["/start-ssh.sh"]
+
